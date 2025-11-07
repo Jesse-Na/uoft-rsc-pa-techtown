@@ -2,6 +2,7 @@ int red = 9;
 int green = 7;
 int sensor = 10;
 
+int sensorState = LOW;
 int redLightTime = 10000;
 int greenLightTime = 5000;
 
@@ -15,7 +16,8 @@ void setup() {
 }
 
 void cycle_lights() {
-  // delay(redLightTime);
+  delay(500);
+
   // switch from red to green
   digitalWrite(red, LOW);
   delay(500);
@@ -31,10 +33,21 @@ void cycle_lights() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int sensorState = digitalRead(sensor);
-  if (sensorState == 1) {
-    cycle_lights();
-    digitalWrite(red, HIGH);
+  int reading = digitalRead(sensor);
+
+  if (reading == HIGH) {
+    // reading will be high on object entry and exit,
+    // but we don't want to cycle lights on consecutive HIGHs.
+    if (sensorState == LOW) {
+      cycle_lights();
+      digitalWrite(red, HIGH);
+      sensorState = HIGH;
+    }
+  } else {
+    if (sensorState == HIGH) {
+      sensorState = LOW;
+    }
   }
-  delay(500);
+
+  // delay(500);
 }
