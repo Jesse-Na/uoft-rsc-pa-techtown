@@ -3,7 +3,6 @@ int green = 7;
 int sensor = 10;
 
 int sensorState = LOW;
-int redLightTime = 10000;
 int greenLightTime = 5000;
 
 void setup() {
@@ -14,10 +13,7 @@ void setup() {
 
   digitalWrite(red, HIGH);
 }
-
 void cycle_lights() {
-  delay(500);
-
   // switch from red to green
   digitalWrite(red, LOW);
   delay(500);
@@ -40,14 +36,10 @@ void loop() {
     // but we don't want to cycle lights on consecutive HIGHs.
     if (sensorState == LOW) {
       cycle_lights();
-      digitalWrite(red, HIGH);
       sensorState = HIGH;
     }
   } else {
-    if (sensorState == HIGH) {
-      sensorState = LOW;
-    }
+    sensorState = LOW;
   }
 
-  // delay(500);
 }
