@@ -2,7 +2,7 @@ int red = 9;
 int green = 7;
 int sensor = 10;
 
-int sensorState = LOW;
+int trafficLightState = LOW;
 int greenLightTime = 5000;
 
 void setup() {
@@ -34,12 +34,12 @@ void loop() {
   if (reading == HIGH) {
     // reading will be high on object entry and exit,
     // but we don't want to cycle lights on consecutive HIGHs.
-    if (sensorState == LOW) {
+    if (trafficLightState == LOW) {
       cycle_lights();
-      sensorState = HIGH;
+      trafficLightState = HIGH;
     }
   } else {
-    sensorState = LOW;
+    trafficLightState = LOW;
   }
 
 }
